@@ -3,7 +3,7 @@
 ### initially create single host k8s
 MEM 2G, HDD 10G 1CPU
 
-## Get 
+## Get OS cloudimage
 wget https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img
 qemu-img info jammy-server-cloudimg-amd64.img
 mv jammy-server-cloudimg-amd64.img jammy-server-cloudimg-amd64.qcow2
@@ -73,3 +73,5 @@ for i in {10..14}; do echo -n "192.168.122.$i,"; done;
 
 ### Check avaiability
 ansible -i "192.168.122.10,192.168.122.11,192.168.122.12,192.168.122.13,192.168.122.14," all -m ping
+
+ansible -i "192.168.122.10,192.168.122.11,192.168.122.12,192.168.122.13,192.168.122.14," all  -m shell -a "sed -i '/match:/d; /macaddress/d' /etc/netplan/50-cloud-init.yaml"
