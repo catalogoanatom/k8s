@@ -1,7 +1,11 @@
 # k8s
 ## Build K8S cluster on libvirt
 ### initially create single host k8s
-MEM 2G, HDD 10G 1CPU
+[https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/]
+
+- MEM 2G 
+- HDD 10G 
+- 2 VCPU
 
 ## Get OS cloudimage
 ```
