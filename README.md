@@ -83,6 +83,53 @@ for i in {10..14}; do echo -n "192.168.122.$i,"; done;
 ```
 ansible -i "192.168.122.10,192.168.122.11,192.168.122.12,192.168.122.13,192.168.122.14," all -m ping
 ```
+
 ```
 ansible -i "192.168.122.10,192.168.122.11,192.168.122.12,192.168.122.13,192.168.122.14," all  -m shell -a "sed -i '/match:/d; /macaddress/d' /etc/netplan/50-cloud-init.yaml"
 ```
+
+
+
+# K8S
+
+https://www.vladimircicovic.com/2022/08/kubernetes-setup-on-ubuntu-2204-lts-jammy-jellyfish
+
+
+but insttead of containerd  -> containerd.io 
+and 
+
+curl https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml -O
+
+
+```
+ sudo kubeadm reset
+```
+
+## ControlPlane (MAster) NODE:
+
+```
+ sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+```
+## Worker Node
+See output from master node, 
+
+### If miss token info
+```
+kubeadm token list
+kubeadm token create <copied token from previous command output>** --print-join-command
+```
+
+## kubeadm get nodes
+```
+kubectl get nodes
+```
+
+
+### Test App
+kubectl create deployment hello-node --image=registry.k8s.io/e2e-test-images/agnhost:2.39 -- /agnhost netexec --http-port=8080
+kubectl expose deployment hello-node --type=LoadBalancer --port=8080
+
+
+
+
+
