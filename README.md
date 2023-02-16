@@ -100,7 +100,6 @@ and
 
 curl https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml -O
 
-
 ```
  sudo kubeadm reset
 ```
@@ -113,6 +112,20 @@ curl https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/ca
 ## Worker Node
 See output from master node, 
 
+``` 
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
+
+
+```
+curl https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml -O
+kubectl apply -f  calico.yaml
+```
+
+
+
 ### If miss token info
 ```
 kubeadm token list
@@ -124,12 +137,14 @@ kubeadm token create <copied token from previous command output>** --print-join-
 kubectl get nodes
 ```
 
+### To rename role for worker node
+```
+kubectl label node k8s-c node-role.kubernetes.io/worker=worker
+```
+
+
 
 ### Test App
 kubectl create deployment hello-node --image=registry.k8s.io/e2e-test-images/agnhost:2.39 -- /agnhost netexec --http-port=8080
 kubectl expose deployment hello-node --type=LoadBalancer --port=8080
-
-
-
-
 
