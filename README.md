@@ -132,6 +132,11 @@ kubeadm token list
 kubeadm token create <copied token from previous command output>** --print-join-command
 ```
 
+### 
+https://stackoverflow.com/questions/51126164/how-do-i-find-the-join-command-for-kubeadm-on-the-master
+
+
+
 ## kubeadm get nodes
 ```
 kubectl get nodes
@@ -144,7 +149,31 @@ kubectl label node k8s-c node-role.kubernetes.io/worker=worker
 
 
 
+
+
+
+
 ### Test App
 kubectl create deployment hello-node --image=registry.k8s.io/e2e-test-images/agnhost:2.39 -- /agnhost netexec --http-port=8080
 kubectl expose deployment hello-node --type=LoadBalancer --port=8080
+
+
+
+### Mysql
+``` 
+kubectl apply -f https://k8s.io/examples/application/mysql/mysql-pv.yaml
+kubectl apply -f https://k8s.io/examples/application/mysql/mysql-deployment.yaml
+```
+
+# client
+```
+kubectl run -it --rm --image=mysql:5.6 --restart=Never mysql-client -- mysql -h mysql -ppassword
+```
+
+
+
+### Alpine:
+```
+kubectl run -it --rm --image=alpine:latest alpine
+```
 
