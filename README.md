@@ -22,7 +22,7 @@ sudo qemu-img info  /var/lib/libvirt/images/k8s.qcow2
 ```
 ## Resize image to 10G 
 ```
-sudo qemu-img create -f qcow2 -F qcow2 -o backing_file=jammy-server-cloudimg-amd64.qcow2  /var/lib/libvirt/images/k8s.qcow2
+sudo qemu-img resize /var/lib/libvirt/images/k8s.qcow2 10G
 ```
 ## Build VM
 ```
@@ -51,6 +51,13 @@ virh shutdown k8s
 virt-clone --original k8s --name k8s-a --file /var/lib/libvirt/images/k8s-a.qcow2
 virt-sysprep -d fork8s-a --hostname k8s-a --enable user-account,ssh-hostkeys,net-hostname,net-hwaddr,machine-id --keep-user-accounts ubuntu --keep-user-accounts amartynov --keep-user-accounts root
 ```
+
+### If ssh not started
+```
+sudo ssh-keygen -A
+sudo systemctl restart ssh
+```
+
 ## Prepare KVM hosts
 ### Clean all libvirt dhcp data
 ```
@@ -86,6 +93,15 @@ ansible -i "192.168.122.10,192.168.122.11,192.168.122.12,192.168.122.13,192.168.
 
 ```
 ansible -i "192.168.122.10,192.168.122.11,192.168.122.12,192.168.122.13,192.168.122.14," all  -m shell -a "sed -i '/match:/d; /macaddress/d' /etc/netplan/50-cloud-init.yaml"
+```
+
+### Disable IPV6
+```
+sudo vim /etc/default/grub
+GRUB_CMDLINE_LINUX_DEFAULT="ipv6.disable=1"
+GRUB_CMDLINE_LINUX="ipv6.disable=1"
+sudo grub-update
+sudo reboot
 ```
 
 
