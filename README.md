@@ -163,10 +163,10 @@ kubectl get nodes
 kubectl label node k8s-c node-role.kubernetes.io/worker=worker
 ```
 
-
-
-
-
+To remove a label from kubernetes nodes:
+```
+kubectl label node "your node-name" node-role.kubernetes.io/worker-
+```
 
 
 ### Test App
