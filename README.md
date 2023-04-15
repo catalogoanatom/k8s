@@ -28,9 +28,10 @@ users:
       - $PUB_KEY
     sudo: ['ALL=(ALL) NOPASSWD:ALL']
     groups: sudo
-    shell: /bin/bash\nruncmd:
-      - echo "AllowUsers ubuntu" >> /etc/ssh/sshd_config
-      - restart ssh
+    shell: /bin/bash
+runcmd:
+  - echo "AllowUsers ubuntu" >> /etc/ssh/sshd_config
+  - restart ssh
 EOF
 ```
 ```
