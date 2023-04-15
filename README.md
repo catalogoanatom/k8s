@@ -12,24 +12,28 @@
 wget https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img
 qemu-img info jammy-server-cloudimg-amd64.img
 mv jammy-server-cloudimg-amd64.img jammy-server-cloudimg-amd64.qcow2
-
+```
+```
 cat > meta-data << EOF
 local-hostname: instance-1
 EOF
-
+```
+```
 export PUB_KEY=$(cat ~/.ssh/id_rsa.pub)
 cat > user-data <<EOF
-#cloud-config\nusers:
-- name: ubuntu
+#cloud-config
+users:
+  - name: ubuntu
 ssh-authorized-keys:
   - $PUB_KEY
-    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+:    sudo: ['ALL=(ALL) NOPASSWD:ALL']
     groups: sudo
     shell: /bin/bash\nruncmd:
       - echo "AllowUsers ubuntu" >> /etc/ssh/sshd_config
       - restart ssh
 EOF
-
+```
+```
 sudo qemu-img create -f qcow2 -F qcow2 -o backing_file=jammy-server-cloudimg-amd64.qcow2  /var/lib/libvirt/images/k8s.qcow2
 sudo qemu-img info  /var/lib/libvirt/images/k8s.qcow2
 ```
