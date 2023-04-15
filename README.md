@@ -24,9 +24,9 @@ cat > user-data <<EOF
 #cloud-config
 users:
   - name: ubuntu
-ssh-authorized-keys:
-  - $PUB_KEY
-:    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    ssh-authorized-keys:
+      - $PUB_KEY
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
     groups: sudo
     shell: /bin/bash\nruncmd:
       - echo "AllowUsers ubuntu" >> /etc/ssh/sshd_config
