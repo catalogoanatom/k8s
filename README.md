@@ -8,6 +8,8 @@
 - 2 VCPU
 
 ## Get OS cloudimage
+
+https://medium.com/@art.vasilyev/use-ubuntu-cloud-image-with-kvm-1f28c19f82f8
 ```
 wget https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img
 qemu-img info jammy-server-cloudimg-amd64.img
